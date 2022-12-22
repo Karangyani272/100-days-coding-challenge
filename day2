@@ -1,0 +1,69 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Question 2
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Explanation: [9,4] is also accepted.
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Solution
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+       List<Integer> arr = new ArrayList<Integer>();
+       HashMap<Integer, Integer> hm1 = new HashMap<>();
+       HashMap<Integer, Integer> hm2 = new HashMap<>();
+
+       for(int i=0; i<nums1.length; i++){
+           if(hm1.containsKey(nums1[i])){
+               hm1.put(nums1[i], hm1.get(nums1[i]) +1);
+           }
+           else
+           {
+               hm1.put(nums1[i], 1);
+           }
+       }
+
+       for(int i=0; i<nums2.length; i++){
+           if(hm2.containsKey(nums2[i])){
+               hm2.put(nums2[i], hm2.get(nums2[i]) +1);
+           }
+           else
+           {
+               hm2.put(nums2[i], 1);
+           }
+       }
+       for(Integer key : hm1.keySet()){
+           if(hm2.containsKey(key)){
+               int x = Math.min(hm2.get(key), hm1.get(key));
+               while(x-- > 0){
+                   arr.add(key);
+               }
+           }
+       }
+       int res[] = new int[arr.size()];
+       for(int i=0; i<arr.size(); i++){
+           res[i] = arr.get(i);
+       }
+       return res;
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Accepted
+Runtime: 0 ms
+Case 1
+
+Input
+nums1 = [1,2,2,1]
+nums2 = [2,2]
+Output [2,2]
+Expected [2,2]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
