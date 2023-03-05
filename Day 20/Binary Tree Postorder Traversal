@@ -1,0 +1,42 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Question
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Given the root of a binary tree, return the postorder traversal of its nodes' values.
+
+Example 1:
+
+Input: root = [1,null,2,3]
+Output: [3,2,1]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Answer
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+     List<Integer> result = new ArrayList<>();
+
+    if (root == null) return result;
+
+
+    // Recursively traverse the left subtree
+    result.addAll(postorderTraversal(root.left));
+
+    // Recursively traverse the right subtree
+    result.addAll(postorderTraversal(root.right));
+
+    
+    // Visit the root
+    result.add(root.val);
+
+    return result;   
+    }
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Accepted Runtime: 0 ms
+Case 1
+Input
+root = [1,null,2,3]
+Output
+[3,2,1]
+Expected
+[3,2,1]
+
