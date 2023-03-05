@@ -1,0 +1,61 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Question
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
+
+Example 1:
+
+Input: points = [[1,1],[2,2],[3,3]]
+Output: 3
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Answer
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+  public int maxPoints(int[][] points) {
+    if (points.length == 0) return 0;
+
+    Map<String, Integer> map = new HashMap<>();
+    int max = 1;
+    for (int i = 0; i < points.length; i++) {
+      map.clear();
+      int duplicate = 0;
+      int localMax = 1;
+      for (int j = i + 1; j < points.length; j++) {
+        int xDiff = points[j][0] - points[i][0];
+        int yDiff = points[j][1] - points[i][1];
+
+        if (xDiff == 0 && yDiff == 0) {
+          duplicate++;
+          continue;
+        }
+
+        int gcd = gcd(xDiff, yDiff);
+        xDiff /= gcd;
+        yDiff /= gcd;
+
+        String slope = xDiff + "/" + yDiff;
+        map.put(slope, map.getOrDefault(slope, 1) + 1);
+        localMax = Math.max(localMax, map.get(slope));
+      }
+      max = Math.max(max, localMax + duplicate);
+    }
+    return max;
+  }
+
+  private int gcd(int x, int y) {
+    if (y == 0) return x;
+    return gcd(y, x % y);
+  }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Accepted Runtime: 9 ms
+Case 1
+Input
+points = [[1,1],[2,2],[3,3]]
+Output
+3
+Expected
+3
